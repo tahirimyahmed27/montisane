@@ -142,9 +142,9 @@ function ProductPage() {
                 <AccordionTrigger className="font-serif text-lg">Benefits</AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-2">
-                    {product.benefits.map((b) => (
-                      <li key={b} className="flex gap-2 items-start"><Leaf className="h-4 w-4 text-sage-deep mt-0.5" /> {b}</li>
-                    ))}
+                    {product.benefits.map((b: string) => (
+                       <li key={b} className="flex gap-2 items-start"><Leaf className="h-4 w-4 text-sage-deep mt-0.5" /> {b}</li>
+                     ))}
                   </ul>
                 </AccordionContent>
               </AccordionItem>
