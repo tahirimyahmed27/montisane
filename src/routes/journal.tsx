@@ -1,38 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/journal")({
   head: () => ({
     meta: [
-      { title: "The Journal — Montisane" },
-      { name: "description", content: "Herbal wisdom, wellness essays, and traditional remedies — from the Montisane editorial." },
+      { title: "Le Journal — Montisane" },
+      { name: "description", content: "Sagesse herbale, essais bien-être et remèdes traditionnels — par l'éditorial Montisane." },
     ],
     links: [{ rel: "canonical", href: "/journal" }],
   }),
   component: Journal,
 });
 
-const categories = ["Herbal Remedies", "Wellness", "Nutrition", "Traditional Wisdom"];
-const articles = [
-  { title: "5 evening herbs for deeper sleep", cat: "Herbal Remedies", read: "6 min" },
-  { title: "The Mediterranean approach to digestion", cat: "Nutrition", read: "8 min" },
-  { title: "Adaptogens, explained simply", cat: "Wellness", read: "5 min" },
-  { title: "Inside an Atlas mountain cooperative", cat: "Traditional Wisdom", read: "10 min" },
-  { title: "Why bitter herbs love your liver", cat: "Herbal Remedies", read: "7 min" },
-  { title: "Building your morning ritual", cat: "Wellness", read: "4 min" },
-];
-
 function Journal() {
+  const { t } = useI18n();
+  const cats = [t("journal.cat.remedies"), t("journal.cat.wellness"), t("journal.cat.nutrition"), t("journal.cat.tradition")];
+  const articles = [
+    { title: t("journal.a0"), cat: t("journal.cat.remedies"), read: "6 min" },
+    { title: t("journal.a1"), cat: t("journal.cat.nutrition"), read: "8 min" },
+    { title: t("journal.a2"), cat: t("journal.cat.wellness"), read: "5 min" },
+    { title: t("journal.a3"), cat: t("journal.cat.tradition"), read: "10 min" },
+    { title: t("journal.a4"), cat: t("journal.cat.remedies"), read: "7 min" },
+    { title: t("journal.a5"), cat: t("journal.cat.wellness"), read: "4 min" },
+  ];
   return (
     <>
       <section className="bg-cream/60 border-b border-border">
         <div className="container-x py-16 text-center">
-          <div className="eyebrow">The journal</div>
-          <h1 className="mt-3 font-serif text-5xl md:text-6xl">Herbal wisdom, weekly.</h1>
+          <div className="eyebrow">{t("journal.eyebrow")}</div>
+          <h1 className="mt-3 font-serif text-5xl md:text-6xl">{t("journal.title")}</h1>
         </div>
       </section>
       <section className="container-x py-16">
         <div className="flex flex-wrap gap-2 mb-10">
-          {["All", ...categories].map((c) => (
+          {[t("journal.all"), ...cats].map((c) => (
             <span key={c} className="px-4 py-1.5 rounded-full text-sm border border-border bg-ivory">{c}</span>
           ))}
         </div>
@@ -43,7 +44,7 @@ function Journal() {
               <div className="p-6">
                 <div className="eyebrow">{a.cat}</div>
                 <h2 className="mt-2 font-serif text-xl">{a.title}</h2>
-                <div className="mt-3 text-xs text-muted-foreground">{a.read} read</div>
+                <div className="mt-3 text-xs text-muted-foreground">{a.read} {t("journal.read")}</div>
               </div>
             </article>
           ))}
