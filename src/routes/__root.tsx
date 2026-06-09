@@ -12,25 +12,25 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart";
+import { LanguageProvider, useI18n } from "@/lib/i18n";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CartDrawer } from "@/components/site/CartDrawer";
 
 function NotFoundComponent() {
+  const { t } = useI18n();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-7xl">404</h1>
-        <h2 className="mt-4 font-serif text-xl">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
+        <h2 className="mt-4 font-serif text-xl">{t("notfound.title")}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{t("notfound.copy")}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            {t("notfound.home")}
           </Link>
         </div>
       </div>
@@ -41,6 +41,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useI18n();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -48,17 +49,17 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">This page didn't load</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Something went wrong on our end.</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">{t("error.title")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("error.copy")}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => { router.invalidate(); reset(); }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Try again
+            {t("error.retry")}
           </button>
           <a href="/" className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent">
-            Go home
+            {t("error.home")}
           </a>
         </div>
       </div>
@@ -71,15 +72,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Montisane — Traditional Herbal Teas for Modern Wellness" },
-      { name: "description", content: "Premium medicinal herbal teas inspired by Moroccan and Mediterranean herbal wisdom — for sleep, stress, digestion, energy, detox and immunity." },
-      { property: "og:title", content: "Montisane — Traditional Herbal Teas for Modern Wellness" },
-      { property: "og:description", content: "Premium medicinal herbal teas inspired by Moroccan and Mediterranean herbal wisdom — for sleep, stress, digestion, energy, detox and immunity." },
+      { title: "Montisane — Tisanes traditionnelles pour le bien-être moderne" },
+      { name: "description", content: "Tisanes médicinales premium inspirées du savoir herbal marocain et méditerranéen — sommeil, stress, digestion, énergie, détox et immunité." },
+      { property: "og:title", content: "Montisane — Tisanes traditionnelles pour le bien-être moderne" },
+      { property: "og:description", content: "Tisanes médicinales premium inspirées du savoir herbal marocain et méditerranéen — sommeil, stress, digestion, énergie, détox et immunité." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Montisane" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Montisane — Traditional Herbal Teas for Modern Wellness" },
-      { name: "twitter:description", content: "Premium medicinal herbal teas inspired by Moroccan and Mediterranean herbal wisdom — for sleep, stress, digestion, energy, detox and immunity." },
+      { name: "twitter:title", content: "Montisane — Tisanes traditionnelles pour le bien-être moderne" },
+      { name: "twitter:description", content: "Tisanes médicinales premium inspirées du savoir herbal marocain et méditerranéen." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/946c65b2-8afd-40e8-86ae-c38b33e53164" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/946c65b2-8afd-40e8-86ae-c38b33e53164" },
     ],
@@ -98,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head><HeadContent /></head>
       <body>{children}<Scripts /></body>
     </html>
@@ -109,14 +110,16 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1"><Outlet /></main>
-          <Footer />
-        </div>
-        <CartDrawer />
-      </CartProvider>
+      <LanguageProvider>
+        <CartProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-1"><Outlet /></main>
+            <Footer />
+          </div>
+          <CartDrawer />
+        </CartProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
