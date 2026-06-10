@@ -442,6 +442,8 @@ export const dict = {
     "journal.readMore": "Read more",
     "journal.back": "Back to journal",
     "journal.notFound": "Article not found",
+    "journal.relatedProducts": "Related products",
+    "journal.minRead": "read",
     "journal.a0": "5 evening herbs for deeper sleep",
     "journal.a1": "The Mediterranean approach to digestion",
     "journal.a2": "Adaptogens, explained simply",
