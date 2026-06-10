@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
-import { getJournalArticle, journalArticles } from "@/lib/journal";
+import { getJournalArticle } from "@/lib/journal";
 import { getProduct } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ArrowLeft } from "lucide-react";
