@@ -106,7 +106,7 @@ function JournalArticlePage() {
         {related.length > 0 && (
           <div className="mt-16 border-t border-border pt-12">
             <h2 className="font-serif text-2xl mb-6">
-              {lang === "fr" ? "Produits liés" : "Related products"}
+              {t("journal.relatedProducts")}
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map((p) => p && <ProductCard key={p.slug} product={p} />)}
