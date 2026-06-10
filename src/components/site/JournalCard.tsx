@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { JournalArticle } from "@/lib/journal";
@@ -10,8 +9,15 @@ interface JournalCardProps {
 export function JournalCard({ article }: JournalCardProps) {
   const { loc, t } = useI18n();
 
+  const articleUrl = `/journal/${article.slug}`;
+
   return (
-    <article className="group flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border hover:border-sage-deep transition-all duration-300 hover:shadow-lg">
+    <a
+      href={articleUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col h-full bg-card rounded-2xl overflow-hidden border border-border hover:border-sage-deep transition-all duration-300 hover:shadow-lg cursor-pointer"
+    >
       {/* Image Section */}
       <div className="relative overflow-hidden aspect-[4/3] bg-gradient-to-br from-sage/20 to-cream/40">
         <div className="absolute inset-0 bg-sage/10 group-hover:bg-sage/20 transition-colors duration-300" />
@@ -32,13 +38,9 @@ export function JournalCard({ article }: JournalCardProps) {
         </div>
 
         {/* Title */}
-        <Link
-          to="/journal/$slug"
-          params={{ slug: article.slug }}
-          className="mt-4 font-serif text-xl md:text-2xl leading-tight text-ink hover:text-sage-deep transition-colors"
-        >
+        <h3 className="mt-4 font-serif text-xl md:text-2xl leading-tight text-ink group-hover:text-sage-deep transition-colors">
           {loc(article.title)}
-        </Link>
+        </h3>
 
         {/* Excerpt - Now Visible */}
         <p className="mt-3 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
@@ -56,15 +58,11 @@ export function JournalCard({ article }: JournalCardProps) {
         <div className="my-4 h-px bg-border/40" />
 
         {/* Read More Button */}
-        <Link
-          to="/journal/$slug"
-          params={{ slug: article.slug }}
-          className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-sage-deep hover:text-sage transition-colors group/link"
-        >
+        <div className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-sage-deep group-hover:text-sage transition-colors group/link">
           {t("journal.readMore")}
           <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-        </Link>
+        </div>
       </div>
-    </article>
+    </a>
   );
 }
