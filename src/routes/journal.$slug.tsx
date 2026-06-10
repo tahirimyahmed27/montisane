@@ -50,7 +50,7 @@ export const Route = createFileRoute("/journal/$slug")({
 
 function JournalArticlePage() {
   const { article } = Route.useLoaderData();
-  const { loc, lang } = useI18n();
+  const { loc, lang, t } = useI18n();
 
   const related: Product[] = [];
   for (const slug of article.relatedProducts ?? []) {
