@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
+import { journalArticles } from "@/lib/journal";
 
 export const Route = createFileRoute("/journal")({
   head: () => ({
@@ -13,16 +14,8 @@ export const Route = createFileRoute("/journal")({
 });
 
 function Journal() {
-  const { t } = useI18n();
+  const { t, loc } = useI18n();
   const cats = [t("journal.cat.remedies"), t("journal.cat.wellness"), t("journal.cat.nutrition"), t("journal.cat.tradition")];
-  const articles = [
-    { title: t("journal.a0"), cat: t("journal.cat.remedies"), read: "6 min" },
-    { title: t("journal.a1"), cat: t("journal.cat.nutrition"), read: "8 min" },
-    { title: t("journal.a2"), cat: t("journal.cat.wellness"), read: "5 min" },
-    { title: t("journal.a3"), cat: t("journal.cat.tradition"), read: "10 min" },
-    { title: t("journal.a4"), cat: t("journal.cat.remedies"), read: "7 min" },
-    { title: t("journal.a5"), cat: t("journal.cat.wellness"), read: "4 min" },
-  ];
   return (
     <>
       <section className="bg-cream/60 border-b border-border">
@@ -38,13 +31,16 @@ function Journal() {
           ))}
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((a) => (
-            <article key={a.title} className="bg-card rounded-xl overflow-hidden border border-border">
+          {journalArticles.map((a) => (
+            <article key={a.slug} className="bg-card rounded-xl overflow-hidden border border-border">
               <div className="aspect-[4/3] bg-sage/20" />
               <div className="p-6">
-                <div className="eyebrow">{a.cat}</div>
-                <h2 className="mt-2 font-serif text-xl">{a.title}</h2>
-                <div className="mt-3 text-xs text-muted-foreground">{a.read} {t("journal.read")}</div>
+                <div className="eyebrow">{loc(a.category)}</div>
+                <h2 className="mt-2 font-serif text-xl">{loc(a.title)}</h2>
+                <div className="mt-3 text-xs text-muted-foreground">{a.readTime} {t("journal.read")}</div>
+                <Link to="/journal/$slug" params={{ slug: a.slug }} className="mt-3 inline-block text-sm underline underline-offset-4 hover:text-sage-deep">
+                  {t("journal.readMore")}
+                </Link>
               </div>
             </article>
           ))}

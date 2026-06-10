@@ -41,7 +41,11 @@ function HomePage() {
   ];
 
   const faqs = [0, 1, 2, 3].map((i) => ({ q: t(`home.faq.${i}.q`), a: t(`home.faq.${i}.a`) }));
-  const journalCards = [0, 1, 2].map((i) => ({ title: t(`home.journal.${i}.title`), cat: t(`home.journal.${i}.cat`) }));
+  const journalCards = [
+    { title: t("home.journal.0.title"), cat: t("home.journal.0.cat"), slug: "plantes-sommeil" },
+    { title: t("home.journal.1.title"), cat: t("home.journal.1.cat"), slug: "digestion-mediterraneenne" },
+    { title: t("home.journal.2.title"), cat: t("home.journal.2.cat"), slug: "adaptogenes" },
+  ];
 
   return (
     <>
@@ -207,7 +211,7 @@ function HomePage() {
                 <div className="p-6">
                   <div className="eyebrow">{a.cat}</div>
                   <h3 className="mt-2 font-serif text-xl">{a.title}</h3>
-                  <Link to="/journal" className="mt-3 inline-block text-xs underline underline-offset-4">{t("home.journal.read")}</Link>
+                  <Link to="/journal/$slug" params={{ slug: a.slug }} className="mt-3 inline-block text-xs underline underline-offset-4">{t("home.journal.read")}</Link>
                 </div>
               </article>
             ))}
