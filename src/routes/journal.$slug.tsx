@@ -74,7 +74,7 @@ function JournalArticlePage() {
             <div className="mt-4 flex items-center gap-3 text-sm text-muted-foreground">
               <span>{new Date(article.date).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
               <span>·</span>
-              <span>{article.readTime} {lang === "fr" ? "de lecture" : "read"}</span>
+              <span>{article.readTime} {t("journal.minRead")}</span>
             </div>
           </div>
         </div>
