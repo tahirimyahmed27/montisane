@@ -66,7 +66,7 @@ function JournalArticlePage() {
         <div className="container-x py-12 md:py-16 max-w-3xl mx-auto">
           <Link to="/journal" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-ink underline underline-offset-4">
             <ArrowLeft className="h-4 w-4" />
-            {lang === "fr" ? "Retour au journal" : "Back to journal"}
+            {t("journal.back")}
           </Link>
           <div className="mt-6">
             <div className="eyebrow">{loc(article.category)}</div>
