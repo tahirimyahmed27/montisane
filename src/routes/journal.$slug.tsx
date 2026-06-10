@@ -8,10 +8,10 @@ import { ArrowLeft } from "lucide-react";
 export const Route = createFileRoute("/journal/$slug")({
   head: ({ params }) => {
     const article = getJournalArticle(params.slug);
-    const title = article?.title ?? "Article";
+    const title = article?.title.fr ?? "Article";
     return {
       meta: [
-        { title: `${title.fr} — Le Journal | Montisane` },
+        { title: `${title} — Le Journal | Montisane` },
         { name: "description", content: article?.excerpt.fr ?? "" },
       ],
       links: [{ rel: "canonical", href: `/journal/${params.slug}` }],
