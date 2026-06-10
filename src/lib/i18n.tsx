@@ -187,6 +187,8 @@ export const dict = {
     "journal.readMore": "Lire la suite",
     "journal.back": "Retour au journal",
     "journal.notFound": "Article introuvable",
+    "journal.relatedProducts": "Produits liés",
+    "journal.minRead": "de lecture",
     "journal.a0": "5 plantes du soir pour un sommeil profond",
     "journal.a1": "L'approche méditerranéenne de la digestion",
     "journal.a2": "Les adaptogènes, simplement expliqués",
