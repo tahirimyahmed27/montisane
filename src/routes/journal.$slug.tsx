@@ -54,7 +54,7 @@ function JournalArticlePage() {
 
   const related = (article.relatedProducts ?? [])
     .map(getProduct)
-    .filter(Boolean);
+    .filter((p): p is NonNullable<typeof p> => p != null);
 
   const contentLines = loc(article.content).split("\n");
 
