@@ -9,7 +9,7 @@ interface JournalCardProps {
 export function JournalCard({ article }: JournalCardProps) {
   const { loc, t } = useI18n();
 
-  const articleUrl = `/journal/${article.slug}`;
+  const articleUrl = `/article/${article.slug}`;
 
   return (
     <a
