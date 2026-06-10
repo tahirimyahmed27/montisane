@@ -211,7 +211,7 @@ function HomePage() {
                 <div className="p-6">
                   <div className="eyebrow">{a.cat}</div>
                   <h3 className="mt-2 font-serif text-xl">{a.title}</h3>
-                  <Link to="/journal" className="mt-3 inline-block text-xs underline underline-offset-4">{t("home.journal.read")}</Link>
+                  <Link to="/journal/$slug" params={{ slug: a.slug }} className="mt-3 inline-block text-xs underline underline-offset-4">{t("home.journal.read")}</Link>
                 </div>
               </article>
             ))}
