@@ -52,9 +52,11 @@ function JournalArticlePage() {
   const { article } = Route.useLoaderData();
   const { loc, lang } = useI18n();
 
-  const related = (article.relatedProducts ?? [])
-    .map(getProduct)
-    .filter((p): p is NonNullable<typeof p> => p != null);
+  const related: Product[] = [];
+  for (const slug of article.relatedProducts ?? []) {
+    const p = getProduct(slug);
+    if (p) related.push(p);
+  }
 
   const contentLines = loc(article.content).split("\n");
 
