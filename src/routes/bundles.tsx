@@ -7,7 +7,7 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/bundles")({
   head: () => ({
     meta: [
-      { title: "Coffrets bien-être — Montisane" },
+      { title: "Coffrets bien-être — Meditisane" },
       { name: "description", content: "Coffrets de tisanes pour le sommeil, la digestion et l'immunité. Jusqu'à 25 % d'économies." },
     ],
     links: [{ rel: "canonical", href: "/bundles" }],

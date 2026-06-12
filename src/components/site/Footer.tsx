@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-cream">
       <div className="container-x py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2 max-w-md">
-          <div className="font-serif text-2xl tracking-[0.3em]">MONTISANE</div>
+          <div className="font-serif text-2xl tracking-[0.3em]">MEDITISANE</div>
           <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{t("footer.tagline")}</p>
           <form className="mt-6 flex gap-2 max-w-sm" onSubmit={(e) => e.preventDefault()}>
             <Input type="email" placeholder={t("footer.emailPlaceholder")} className="bg-ivory" required />
@@ -40,7 +40,7 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="container-x py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} Montisane. {t("footer.rights")}</span>
+          <span>© {new Date().getFullYear()} Meditisane. {t("footer.rights")}</span>
           <div className="flex gap-5">
             <span>{t("footer.privacy")}</span><span>{t("footer.terms")}</span><span>{t("footer.shipping")}</span>
           </div>

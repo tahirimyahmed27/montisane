@@ -6,8 +6,8 @@ import { JournalCard } from "@/components/site/JournalCard";
 export const Route = createFileRoute("/journal")({
   head: () => ({
     meta: [
-      { title: "Le Journal — Montisane" },
-      { name: "description", content: "Sagesse herbale, essais bien-être et remèdes traditionnels — par l'éditorial Montisane." },
+      { title: "Le Journal — Meditisane" },
+      { name: "description", content: "Sagesse herbale, essais bien-être et remèdes traditionnels — par l'éditorial Meditisane." },
     ],
     links: [{ rel: "canonical", href: "/journal" }],
   }),
