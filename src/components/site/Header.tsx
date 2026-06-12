@@ -51,7 +51,7 @@ export function Header() {
         </nav>
 
         <Link to="/" className="font-serif text-2xl tracking-[0.3em] lg:absolute lg:left-1/2 lg:-translate-x-1/2">
-          MONTISANE
+          MEDITISANE
         </Link>
 
         <div className="flex items-center gap-1">
@@ -80,7 +80,7 @@ export function Header() {
       {mobile && (
         <div className="fixed inset-0 z-50 bg-ivory">
           <div className="container-x flex items-center justify-between h-16">
-            <span className="font-serif text-xl tracking-[0.3em]">MONTISANE</span>
+            <span className="font-serif text-xl tracking-[0.3em]">MEDITISANE</span>
             <button onClick={() => setMobile(false)} aria-label={t("header.close")}><X className="h-5 w-5" /></button>
           </div>
           <nav className="container-x flex flex-col gap-6 pt-8 text-2xl font-serif">

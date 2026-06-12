@@ -5,8 +5,8 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Notre histoire — Montisane" },
-      { name: "description", content: "L'histoire de Montisane — tradition herbale marocaine-méditerranéenne pour le bien-être moderne." },
+      { title: "Notre histoire — Meditisane" },
+      { name: "description", content: "L'histoire de Meditisane — tradition herbale marocaine-méditerranéenne pour le bien-être moderne." },
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),

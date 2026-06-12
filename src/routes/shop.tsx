@@ -9,10 +9,10 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
-      { title: "Boutique de tisanes — Montisane" },
-      { name: "description", content: "Découvrez toute la collection de tisanes médicinales Montisane — sommeil, stress, digestion, énergie, détox et immunité." },
-      { property: "og:title", content: "Boutique — Montisane" },
-      { property: "og:description", content: "Toutes les tisanes médicinales Montisane." },
+      { title: "Boutique de tisanes — Meditisane" },
+      { name: "description", content: "Découvrez toute la collection de tisanes médicinales Meditisane — sommeil, stress, digestion, énergie, détox et immunité." },
+      { property: "og:title", content: "Boutique — Meditisane" },
+      { property: "og:description", content: "Toutes les tisanes médicinales Meditisane." },
     ],
     links: [{ rel: "canonical", href: "/shop" }],
   }),

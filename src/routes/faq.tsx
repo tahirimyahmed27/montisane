@@ -5,8 +5,8 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — Montisane" },
-      { name: "description", content: "Réponses aux questions fréquentes sur les tisanes Montisane, les abonnements et la livraison." },
+      { title: "FAQ — Meditisane" },
+      { name: "description", content: "Réponses aux questions fréquentes sur les tisanes Meditisane, les abonnements et la livraison." },
     ],
     links: [{ rel: "canonical", href: "/faq" }],
   }),
