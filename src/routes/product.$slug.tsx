@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { getProduct, products } from "@/lib/products";
+import { getProduct } from "@/lib/products";
+import { useProducts } from "@/lib/store";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -9,13 +10,12 @@ import { Star, Minus, Plus, Truck, ShieldCheck, RefreshCcw, Leaf } from "lucide-
 
 export const Route = createFileRoute("/product/$slug")({
   loader: ({ params }) => {
-    const product = getProduct(params.slug);
-    if (!product) throw notFound();
-    return { product };
+    const product = getProduct(params.slug) ?? null;
+    return { product, slug: params.slug };
   },
   head: ({ loaderData }) => {
     const p = loaderData?.product;
-    if (!p) return { meta: [{ title: "Product not found — Montisane" }] };
+    if (!p) return { meta: [{ title: "Product — Montisane" }] };
     return {
       meta: [
         { title: `${p.name} — ${p.categoryLabel} | Montisane` },
@@ -51,10 +51,14 @@ export const Route = createFileRoute("/product/$slug")({
 });
 
 function ProductPage() {
-  const { product } = Route.useLoaderData();
+  const { product: loaded, slug } = Route.useLoaderData();
+  const products = useProducts();
+  const product = loaded ?? products.find((p) => p.slug === slug);
   const { add, setOpen } = useCart();
   const [qty, setQty] = useState(1);
   const [sub, setSub] = useState(false);
+
+  if (!product) throw notFound();
 
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
   const price = sub ? product.price * 0.9 : product.price;

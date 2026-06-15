@@ -10,6 +10,7 @@ const nav = [
   { to: "/bundles", label: "Bundles" },
   { to: "/journal", label: "Journal" },
   { to: "/about", label: "Our Story" },
+  { to: "/atelier", label: "Atelier" },
 ];
 
 export function AnnouncementBar() {
