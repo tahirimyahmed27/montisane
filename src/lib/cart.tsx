@@ -20,7 +20,7 @@ interface CartContextValue {
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "meditisane-cart-v1";
+const STORAGE_KEY = "montisane-cart-v1";
 export const FREE_SHIPPING_THRESHOLD = 60;
 
 export function CartProvider({ children }: { children: ReactNode }) {

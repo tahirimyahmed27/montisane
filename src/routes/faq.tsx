@@ -1,29 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — Meditisane" },
-      { name: "description", content: "Réponses aux questions fréquentes sur les tisanes Meditisane, les abonnements et la livraison." },
+      { title: "FAQ — Montisane" },
+      { name: "description", content: "Answers to common questions about Montisane herbal teas, subscriptions and shipping." },
     ],
     links: [{ rel: "canonical", href: "/faq" }],
   }),
   component: FAQ,
 });
 
+const groups = [
+  {
+    title: "Our teas",
+    items: [
+      { q: "Are your teas caffeine-free?", a: "Most blends are caffeine-free. Golden Spark contains yerba mate — clearly labeled." },
+      { q: "Are they organic?", a: "All ingredients are sourced from certified organic herbalists or cooperatives." },
+      { q: "How long do effects take?", a: "Digestive blends can work in 20 minutes. Adaptogens unfold over 7–14 days." },
+    ],
+  },
+  {
+    title: "Orders & shipping",
+    items: [
+      { q: "Do you ship internationally?", a: "Yes — to 35+ countries. Shipping is free over $60 in the US, $80 internationally." },
+      { q: "How fast is shipping?", a: "Standard 4–6 business days. Express 1–2 business days." },
+      { q: "What's your return policy?", a: "Try any tea risk-free for 30 days. If you don't love it, we'll refund you." },
+    ],
+  },
+  {
+    title: "Subscriptions",
+    items: [
+      { q: "How does subscribe & save work?", a: "Choose delivery every 1, 2 or 3 months and save 10% on every order." },
+      { q: "Can I cancel anytime?", a: "Yes — pause, skip or cancel from your account at any time, no questions asked." },
+    ],
+  },
+];
+
 function FAQ() {
-  const { t } = useI18n();
-  const groups = [
-    { title: t("faq.g0.title"), items: [0, 1, 2].map((i) => ({ q: t(`faq.g0.${i}.q`), a: t(`faq.g0.${i}.a`) })) },
-    { title: t("faq.g1.title"), items: [0, 1, 2].map((i) => ({ q: t(`faq.g1.${i}.q`), a: t(`faq.g1.${i}.a`) })) },
-    { title: t("faq.g2.title"), items: [0, 1].map((i) => ({ q: t(`faq.g2.${i}.q`), a: t(`faq.g2.${i}.a`) })) },
-  ];
   return (
     <section className="container-x py-20 max-w-3xl">
-      <div className="eyebrow text-center">{t("faq.eyebrow")}</div>
-      <h1 className="mt-3 font-serif text-5xl md:text-6xl text-center">{t("faq.title")}</h1>
+      <div className="eyebrow text-center">Help center</div>
+      <h1 className="mt-3 font-serif text-5xl md:text-6xl text-center">Frequently asked</h1>
       {groups.map((g) => (
         <div key={g.title} className="mt-12">
           <h2 className="font-serif text-2xl mb-4">{g.title}</h2>
