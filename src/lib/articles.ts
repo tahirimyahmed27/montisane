@@ -21,6 +21,7 @@ export interface Article {
   excerpt: string;
   image: string;
   body: string[];
+  bodyHtml?: string;
 }
 
 export const articleCategories: ArticleCategory[] = [
