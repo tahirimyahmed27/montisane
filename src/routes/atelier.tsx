@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Pencil, Trash2, Plus, Leaf, BookOpen } from "lucide-react";
 import { toast } from "sonner";
+import { RichTextEditor } from "@/components/site/RichTextEditor";
 import {
   useArticles,
   useProducts,
