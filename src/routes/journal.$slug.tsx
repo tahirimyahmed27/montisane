@@ -74,14 +74,20 @@ function ArticlePage() {
 
       <section className="container-x pb-20">
         <div className="max-w-2xl mx-auto">
-          <p className="font-serif text-2xl leading-relaxed text-ink/90 first-letter:text-5xl first-letter:font-serif first-letter:float-left first-letter:mr-2 first-letter:leading-none">
-            {article.body[0]}
-          </p>
-          <div className="mt-8 space-y-6 text-lg leading-relaxed text-ink/85">
-            {article.body.slice(1).map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
+          {article.bodyHtml ? (
+            <div className="article-body" dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />
+          ) : (
+            <>
+              <p className="font-serif text-2xl leading-relaxed text-ink/90 first-letter:text-5xl first-letter:font-serif first-letter:float-left first-letter:mr-2 first-letter:leading-none">
+                {article.body[0]}
+              </p>
+              <div className="mt-8 space-y-6 text-lg leading-relaxed text-ink/85">
+                {article.body.slice(1).map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </>
+          )}
 
           <div className="mt-12 border-t border-border pt-8">
             <div className="text-sm text-muted-foreground">Written by</div>
