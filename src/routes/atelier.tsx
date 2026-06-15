@@ -81,7 +81,10 @@ function ArticlesManager() {
   const [editing, setEditing] = useState<Article | null>(null);
 
   const startNew = () => setEditing(emptyArticle());
-  const startEdit = (a: Article) => setEditing({ ...a, body: [...a.body] });
+  const startEdit = (a: Article) => {
+    const html = a.bodyHtml ?? a.body.map((p) => `<p>${escapeHtml(p)}</p>`).join("");
+    setEditing({ ...a, body: [...a.body], bodyHtml: html });
+  };
 
   return (
     <div className="grid lg:grid-cols-[1fr_1.2fr] gap-10">
@@ -146,7 +149,14 @@ function ArticlesManager() {
                 toast.error("Titre requis");
                 return;
               }
-              upsertArticle({ ...a, slug: finalSlug, body: a.body.filter((p) => p.trim()) });
+              const html = (a.bodyHtml ?? "").trim();
+              const plain = html
+                .replace(/<\/(p|h2|h3|li|blockquote)>/gi, "\n")
+                .replace(/<[^>]+>/g, "")
+                .split(/\n+/)
+                .map((s) => s.trim())
+                .filter(Boolean);
+              upsertArticle({ ...a, slug: finalSlug, bodyHtml: html || undefined, body: plain });
               toast.success("Article enregistré");
               setEditing(null);
             }}
@@ -211,11 +221,11 @@ function ArticleForm({
       <Field label="Extrait">
         <Textarea value={a.excerpt} onChange={(e) => update("excerpt", e.target.value)} rows={2} />
       </Field>
-      <Field label="Contenu (un paragraphe par ligne vide)">
-        <Textarea
-          value={a.body.join("\n\n")}
-          onChange={(e) => update("body", e.target.value.split(/\n\s*\n/))}
-          rows={10}
+      <Field label="Contenu">
+        <RichTextEditor
+          value={a.bodyHtml ?? ""}
+          onChange={(html) => update("bodyHtml", html)}
+          placeholder="Rédigez votre article — titres, listes, citations, liens…"
         />
       </Field>
       <div className="flex gap-3 pt-2">
@@ -224,6 +234,13 @@ function ArticleForm({
       </div>
     </form>
   );
+}
+
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 // =================== PRODUCTS ===================
