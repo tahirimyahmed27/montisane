@@ -16,9 +16,11 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as BundlesRouteImport } from './routes/bundles'
+import { Route as AtelierRouteImport } from './routes/atelier'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
+import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
@@ -55,6 +57,11 @@ const BundlesRoute = BundlesRouteImport.update({
   path: '/bundles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AtelierRoute = AtelierRouteImport.update({
+  id: '/atelier',
+  path: '/atelier',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -70,42 +77,53 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
   path: '/product/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalSlugRoute = JournalSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => JournalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atelier': typeof AtelierRoute
   '/bundles': typeof BundlesRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
-  '/journal': typeof JournalRoute
+  '/journal': typeof JournalRouteWithChildren
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/journal/$slug': typeof JournalSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atelier': typeof AtelierRoute
   '/bundles': typeof BundlesRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
-  '/journal': typeof JournalRoute
+  '/journal': typeof JournalRouteWithChildren
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/journal/$slug': typeof JournalSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/atelier': typeof AtelierRoute
   '/bundles': typeof BundlesRoute
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
-  '/journal': typeof JournalRoute
+  '/journal': typeof JournalRouteWithChildren
   '/shop': typeof ShopRoute
   '/thank-you': typeof ThankYouRoute
+  '/journal/$slug': typeof JournalSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
@@ -113,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/atelier'
     | '/bundles'
     | '/checkout'
     | '/contact'
@@ -120,11 +139,13 @@ export interface FileRouteTypes {
     | '/journal'
     | '/shop'
     | '/thank-you'
+    | '/journal/$slug'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/atelier'
     | '/bundles'
     | '/checkout'
     | '/contact'
@@ -132,11 +153,13 @@ export interface FileRouteTypes {
     | '/journal'
     | '/shop'
     | '/thank-you'
+    | '/journal/$slug'
     | '/product/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/atelier'
     | '/bundles'
     | '/checkout'
     | '/contact'
@@ -144,17 +167,19 @@ export interface FileRouteTypes {
     | '/journal'
     | '/shop'
     | '/thank-you'
+    | '/journal/$slug'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AtelierRoute: typeof AtelierRoute
   BundlesRoute: typeof BundlesRoute
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
-  JournalRoute: typeof JournalRoute
+  JournalRoute: typeof JournalRouteWithChildren
   ShopRoute: typeof ShopRoute
   ThankYouRoute: typeof ThankYouRoute
   ProductSlugRoute: typeof ProductSlugRoute
@@ -211,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BundlesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/atelier': {
+      id: '/atelier'
+      path: '/atelier'
+      fullPath: '/atelier'
+      preLoaderRoute: typeof AtelierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -232,17 +264,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/$slug': {
+      id: '/journal/$slug'
+      path: '/$slug'
+      fullPath: '/journal/$slug'
+      preLoaderRoute: typeof JournalSlugRouteImport
+      parentRoute: typeof JournalRoute
+    }
   }
 }
+
+interface JournalRouteChildren {
+  JournalSlugRoute: typeof JournalSlugRoute
+}
+
+const JournalRouteChildren: JournalRouteChildren = {
+  JournalSlugRoute: JournalSlugRoute,
+}
+
+const JournalRouteWithChildren =
+  JournalRoute._addFileChildren(JournalRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AtelierRoute: AtelierRoute,
   BundlesRoute: BundlesRoute,
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
-  JournalRoute: JournalRoute,
+  JournalRoute: JournalRouteWithChildren,
   ShopRoute: ShopRoute,
   ThankYouRoute: ThankYouRoute,
   ProductSlugRoute: ProductSlugRoute,
@@ -250,13 +301,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

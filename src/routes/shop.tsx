@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { products, categories, type Category } from "@/lib/products";
+import { categories, type Category } from "@/lib/products";
+import { useProducts } from "@/lib/store";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
@@ -28,6 +29,7 @@ function ShopPage() {
   const [sort, setSort] = useState<string>(search.sort ?? "popular");
   const [query, setQuery] = useState("");
 
+  const products = useProducts();
   const filtered = useMemo(() => {
     let list = products;
     if (active !== "all") list = list.filter((p) => p.category === active);
@@ -39,7 +41,7 @@ function ShopPage() {
       default: list = [...list].sort((a, b) => b.reviews - a.reviews);
     }
     return list;
-  }, [active, sort, query]);
+  }, [products, active, sort, query]);
 
   return (
     <>
