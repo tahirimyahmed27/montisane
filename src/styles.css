@@ -123,3 +123,34 @@
   font-weight: 500;
   color: var(--color-sage-deep);
 }
+
+/* Tiptap editor + rendered article body */
+.prose-editor p { margin: 0 0 0.75rem; line-height: 1.65; }
+.prose-editor h2 { font-family: var(--font-serif); font-size: 1.75rem; margin: 1.25rem 0 0.5rem; letter-spacing: -0.01em; }
+.prose-editor h3 { font-family: var(--font-serif); font-size: 1.35rem; margin: 1rem 0 0.4rem; letter-spacing: -0.01em; }
+.prose-editor ul, .prose-editor ol { padding-left: 1.4rem; margin: 0 0 0.75rem; }
+.prose-editor ul { list-style: disc; }
+.prose-editor ol { list-style: decimal; }
+.prose-editor blockquote { border-left: 3px solid var(--color-sage-deep); padding-left: 1rem; font-style: italic; color: var(--color-muted-foreground); margin: 1rem 0; }
+.prose-editor hr { border: none; border-top: 1px solid var(--color-border); margin: 1.5rem 0; }
+.prose-editor a { color: var(--color-sage-deep); text-decoration: underline; }
+.prose-editor strong { font-weight: 600; }
+.prose-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-muted-foreground);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.article-body { font-size: 1.125rem; line-height: 1.75; color: oklch(from var(--ink) l c h / 0.88); }
+.article-body > * + * { margin-top: 1.25rem; }
+.article-body h2 { font-family: var(--font-serif); font-size: 2rem; margin-top: 2.5rem; letter-spacing: -0.01em; }
+.article-body h3 { font-family: var(--font-serif); font-size: 1.5rem; margin-top: 2rem; letter-spacing: -0.01em; }
+.article-body ul { list-style: disc; padding-left: 1.5rem; }
+.article-body ol { list-style: decimal; padding-left: 1.5rem; }
+.article-body li + li { margin-top: 0.4rem; }
+.article-body blockquote { border-left: 3px solid var(--color-sage-deep); padding-left: 1.25rem; font-style: italic; font-family: var(--font-serif); font-size: 1.35rem; color: oklch(from var(--ink) l c h / 0.75); }
+.article-body a { color: var(--color-sage-deep); text-decoration: underline; }
+.article-body hr { border: none; border-top: 1px solid var(--color-border); margin: 2rem 0; }
+.article-body strong { font-weight: 600; }
