@@ -1,4 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { articleCategories } from "@/lib/articles";
+import { useArticles } from "@/lib/store";
 
 export const Route = createFileRoute("/journal")({
   head: () => ({
@@ -11,39 +14,73 @@ export const Route = createFileRoute("/journal")({
   component: Journal,
 });
 
-const categories = ["Herbal Remedies", "Wellness", "Nutrition", "Traditional Wisdom"];
-const articles = [
-  { title: "5 evening herbs for deeper sleep", cat: "Herbal Remedies", read: "6 min" },
-  { title: "The Mediterranean approach to digestion", cat: "Nutrition", read: "8 min" },
-  { title: "Adaptogens, explained simply", cat: "Wellness", read: "5 min" },
-  { title: "Inside an Atlas mountain cooperative", cat: "Traditional Wisdom", read: "10 min" },
-  { title: "Why bitter herbs love your liver", cat: "Herbal Remedies", read: "7 min" },
-  { title: "Building your morning ritual", cat: "Wellness", read: "4 min" },
-];
-
 function Journal() {
+  const articles = useArticles();
+  const [active, setActive] = useState<string>("All");
+
+  const filtered = useMemo(
+    () => (active === "All" ? articles : articles.filter((a) => a.category === active)),
+    [articles, active]
+  );
+
   return (
     <>
       <section className="bg-cream/60 border-b border-border">
         <div className="container-x py-16 text-center">
           <div className="eyebrow">The journal</div>
           <h1 className="mt-3 font-serif text-5xl md:text-6xl">Herbal wisdom, weekly.</h1>
+          <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
+            Essays, remedies, and traditional knowledge from our herbalists and Atlas mountain partners.
+          </p>
         </div>
       </section>
       <section className="container-x py-16">
         <div className="flex flex-wrap gap-2 mb-10">
-          {["All", ...categories].map((c) => (
-            <span key={c} className="px-4 py-1.5 rounded-full text-sm border border-border bg-ivory">{c}</span>
+          {["All", ...articleCategories].map((c) => (
+            <button
+              key={c}
+              onClick={() => setActive(c)}
+              className={`px-4 py-1.5 rounded-full text-sm border transition-colors ${
+                active === c
+                  ? "bg-sage-deep text-ivory border-sage-deep"
+                  : "bg-ivory border-border hover:border-sage-deep"
+              }`}
+            >
+              {c}
+            </button>
           ))}
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((a) => (
-            <article key={a.title} className="bg-card rounded-xl overflow-hidden border border-border">
-              <div className="aspect-[4/3] bg-sage/20" />
-              <div className="p-6">
-                <div className="eyebrow">{a.cat}</div>
-                <h2 className="mt-2 font-serif text-xl">{a.title}</h2>
-                <div className="mt-3 text-xs text-muted-foreground">{a.read} read</div>
+          {filtered.map((a) => (
+            <article key={a.slug} className="group bg-card rounded-xl overflow-hidden border border-border flex flex-col">
+              <Link to="/journal/$slug" params={{ slug: a.slug }} className="block aspect-[4/3] overflow-hidden bg-sage/20">
+                {a.image && (
+                  <img
+                    src={a.image}
+                    alt={a.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
+              </Link>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="eyebrow">{a.category}</div>
+                <h2 className="mt-2 font-serif text-xl leading-snug">
+                  <Link to="/journal/$slug" params={{ slug: a.slug }} className="hover:text-sage-deep">
+                    {a.title}
+                  </Link>
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground line-clamp-3 flex-1">{a.excerpt}</p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">{a.readTime} read</span>
+                  <Link
+                    to="/journal/$slug"
+                    params={{ slug: a.slug }}
+                    className="text-sm font-medium text-sage-deep hover:underline"
+                  >
+                    Lire la suite →
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
